@@ -17,6 +17,5 @@ echo substr($text, 11, 5) . "\n"; // teXt
 echo strtoupper($text) . "\n"; // EXAMPLE TEXT
 echo strtolower($text) . "\n"; // example text
 
-$text = 'Nel mezzo del cammin di nostra vita';
-$text2 = str_replace(' ','',lcfirst(ucwords($text)));
-echo $text2;
+
+echo str_replace(' ','',lcfirst(ucwords('Nel mezzo del cammin di nostra vita')));
