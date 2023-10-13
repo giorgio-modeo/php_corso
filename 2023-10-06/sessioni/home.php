@@ -8,7 +8,7 @@
 <body>
     <?php
         session_start();
-       if(!isset($_SESSION['user'])){
+        if(!$_SESSION['user']){
         header('Location: index.html');
        }
     ?>

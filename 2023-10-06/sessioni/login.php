@@ -2,17 +2,22 @@
 $email = $_POST["email"];
 $pwd = $_POST["pwd"];
 
-$dati = unserialize(file_get_contents("credenziali.csv"));
-
-
-if ($email == $dati["email"] && $pwd == $dati["password"]) {
-    echo "<script> alert('ciao')</script>";
-    session_start();
-    $_SESSION['user'] = $email;
-    header("Location: home.php");
-    exit;
-}else {
-    echo "<script> alert('non ciaoS')</script>";
-header("Location: index.html");
+$credenziali = explode(PHP_EOL, file_get_contents("credenziali.csv"));
+$dato = [];
+foreach ($credenziali as $dati) {
+    array_push($dato, explode(":", $dati));
 }
+
+$indirizzi_email = array_column($dato, 0);
+
+$indice = array_search($email, $indirizzi_email);
+if ($indice !== false) {
+    session_start();
+    $_SESSION['user'] = true;
+    header('Location: home.php');
+}else{
+    header('Location: index.html');
+
+}
+
 ?>
