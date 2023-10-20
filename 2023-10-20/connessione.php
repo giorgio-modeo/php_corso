@@ -37,6 +37,8 @@ for ($i=0; $i < 100; $i++) {
     $stmt->execute();
 }
 
+// $frc1to4 = 'SELECT * FROM fruit WHERE colour = "rosso" and calories between 100 and 400';
 $frc1to4 = 'SELECT * FROM fruit WHERE colour = rosso and calories between 100 and 400';
 $query = $pdo ->query($frc1to4);
+$query->bindParam(':colour',$colour,PDO::PARAM_STR);
 var_dump($query->execute());
