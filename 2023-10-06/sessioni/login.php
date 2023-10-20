@@ -1,8 +1,8 @@
 <?php
 $email = $_POST["email"];
 $pwd = $_POST["pwd"];
-
-$credenziali = explode(PHP_EOL, file_get_contents("credenziali.csv"));
+$file = file_get_contents("credenziali.csv");
+$credenziali = explode(PHP_EOL, $file);
 $dato = [];
 foreach ($credenziali as $dati) {
     array_push($dato, explode(":", $dati));

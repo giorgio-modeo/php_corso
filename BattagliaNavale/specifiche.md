@@ -1,0 +1,6 @@
+- appena entri nel sito chiede il nome
+- appena il nome viene inserito viene fornito un link con al fondo un id per collegarsi
+- database mysql
+- tabella 10X10
+- 6 navi : 1 l=4; 2 l=3; 3 l=2 ;
+- no web socket
