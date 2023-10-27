@@ -10,14 +10,6 @@ try {
    exit(1);
 }
 
-// $sql = 'SELECT * FROM test WHERE nome = :nome';
-// $sth = $pdo->prepare($sql);
-// echo('<br>');
-// var_dump($sth);
-// $sth->execute([':nome'=>'Mario']);
-// $result = $sth ->fetchAll(PDO::FETCH_ASSOC);
-// echo('<br>');
-// var_dump($result);
 echo('<br>');
 $names = ['mela', 'pera', 'banana','arancia', 'melone'];
 $colours = ['rosso', 'verde', 'giallo', 'arancione', 'marrone'];
@@ -37,8 +29,10 @@ for ($i=0; $i < 100; $i++) {
     $stmt->execute();
 }
 
+$colour = 'rosso';
 // $frc1to4 = 'SELECT * FROM fruit WHERE colour = "rosso" and calories between 100 and 400';
-$frc1to4 = 'SELECT * FROM fruit WHERE colour = rosso and calories between 100 and 400';
-$query = $pdo ->query($frc1to4);
+$frc1to4 = 'SELECT * FROM fruit WHERE colour = :colour and calories between 100 and 400';
+
+$query = $pdo ->prepare($frc1to4);
 $query->bindParam(':colour',$colour,PDO::PARAM_STR);
-var_dump($query->execute());
+echo($query->execute());
