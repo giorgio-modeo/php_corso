@@ -12,15 +12,17 @@ class FilterTest extends TestCase
     * @dataProvider getDataInput
     */
 
-    public function testEmailProvider($email)
+    public function testEmailProvider($email, $expected)
     {
         $filter = new Filter();
-        $this->assertTrue($filter->isEmail($email));
+        $this->assertEquals($filter->isEmail($email), $expected);
     }
     public function getDataInput() {
         return [
-            ['foo@bar.com'],
-            ['foo']
+            ['foo@bar.com',true],
+            ['foo',false],
+            ['foo@bar',false]
+            
         ];
     }
 }
