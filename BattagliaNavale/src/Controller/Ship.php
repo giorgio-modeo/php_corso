@@ -1,6 +1,6 @@
 <?php 
 declare(strict_types=1);
-namespace BattagliaNavale\src\Controller;
+namespace App\Controller;
 class Ship{
     public $tipo;
     public $lunghezza;
@@ -17,8 +17,11 @@ class Ship{
         if ($this->affondata === true)return "già affondata";
 
         if(in_array($colpo, $this->coordinate)){
-            $this->rimuoviCoordinate($colpo);
-            if (count($this->coordinate) === 0){
+
+            unset($this->coordinate[1]);
+            return $this->coordinate[$colpo];
+            
+            if (empty($this->coordinate)){
                 $this->affondata = true;
                 return "affondata";
             }
@@ -26,9 +29,10 @@ class Ship{
         }
         return "acqua";
     }
-    public function rimuoviCoordinate($colpo){
-        unset($this->coordinate[$key]);
-    }
+    // public function rimuoviCoordinate($colpo){
+    //     unset($this->coordinate[$colpo]);
+    //     return true;
+    // }
 }
 ?>
  

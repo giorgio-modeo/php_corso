@@ -1,0 +1,20 @@
+{
+    "name": "app/battaglianavale",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Test\\": "test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "giorgiomodeo-admin",
+            "email": "giorgio.modeo@gmail.com"
+        }
+    ],
+    "require": {}
+}
