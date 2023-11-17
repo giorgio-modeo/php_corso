@@ -7,20 +7,18 @@ class Ship{
     public $affondata = false;
     public $coordinate = [];
 
-    public function __construct($tipo, $lunghezza, $coordinate){
+    public function __construct($tipo, $lunghezza){
         $this->tipo = $tipo;
         $this->lunghezza = $lunghezza;
-        $this->coordinate = $coordinate;
-    }  
+
+    }
 
     public function colpito($colpo){
-        if ($this->affondata === true)return "già affondata";
+        if ($this->affondata === true){
+            return "già affondata";}
 
         if(in_array($colpo, $this->coordinate)){
-
-            unset($this->coordinate[1]);
-            return $this->coordinate[$colpo];
-            
+            $this->rimuoviCoordinate($colpo);
             if (empty($this->coordinate)){
                 $this->affondata = true;
                 return "affondata";
@@ -29,10 +27,53 @@ class Ship{
         }
         return "acqua";
     }
-    // public function rimuoviCoordinate($colpo){
-    //     unset($this->coordinate[$colpo]);
-    //     return true;
-    // }
+
+    public function rimuoviCoordinate($colpo){
+        unset($this->coordinate[array_search($colpo, $this->coordinate)]);
+    }
+    public function setAffondata(){
+        $this->affondata = true;
+    }
+
+    public function impostaPosizione($coordinate) {
+        if ($this->verificaVicinanza($coordinate)) {
+            $this->posizione = $coordinate;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function verificaVicinanza($coordinate): bool {
+        $lunghezza = count($coordinate);
+        $lettere = [];
+        $numeri = [];
+        foreach ($coordinate as $c) {
+            $lettere[] = substr($c, 0, 1);
+            $numeri[] = substr($c, 1, 1);
+        }
+        $lettere = array_unique($lettere);
+        $numeri = array_unique($numeri);
+        if (count($lettere) == 1) {
+            sort($numeri);
+            for ($i = 0; $i < count($numeri) - 1; $i++) {
+                if ($numeri[$i] + 1 != $numeri[$i + 1]) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (count($numeri) == 1) {
+            sort($lettere);
+            for ($i = 0; $i < count($lettere) - 1; $i++) {
+                if (ord($lettere[$i]) + 1 != ord($lettere[$i + 1])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+        
+    }
 }
-?>
+
  
