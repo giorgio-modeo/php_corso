@@ -14,18 +14,21 @@ class Ship{
     }
 
     public function colpito($colpo){
-        if ($this->affondata === true){
-            return "già affondata";}
+        if ($this->affondata === true) {
+            return "già affondata";
+        }
 
         if(in_array($colpo, $this->coordinate)){
             $this->rimuoviCoordinate($colpo);
-            if (empty($this->coordinate)){
-                $this->affondata = true;
-                return "affondata";
+            if(count($this->coordinate) == 0){
+                $this->setAffondata();
+                return 'affondata';
             }
-            return "colpito";
+            return 'colpito';
         }
-        return "acqua";
+        return 'acqua';
+        
+       
     }
 
     public function rimuoviCoordinate($colpo){
@@ -35,9 +38,11 @@ class Ship{
         $this->affondata = true;
     }
 
+    
+
     public function impostaPosizione($coordinate) {
         if ($this->verificaVicinanza($coordinate)) {
-            $this->posizione = $coordinate;
+            $this->coordinate = $coordinate;
             return true;
         } else {
             return false;

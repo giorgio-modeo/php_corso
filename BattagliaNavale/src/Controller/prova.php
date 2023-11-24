@@ -1,19 +1,13 @@
 <?php
- echo(false);
-include 'ship.php';
-$a = new Ship();
-$a->coordinate = ["a1","a2", "a3"];
-$registro =[];
-array_push($registro,$_POST['coordinata']);
-var_dump(end($registro));
+declare(strict_types=1);
+namespace App\Controller;
+include 'Ship.php';
+$ship = new Ship('Patrol Boat', 2);
+$ship->impostaPosizione(['a1','a2']);
+var_dump($ship->coordinate );
+$result = $ship->colpito('a1');
+echo($result);
 
 
-if(in_array(end($registro) ,$a->coordinate)) {
-    $index = array_search($_POST['coordinata'] ,$a->coordinate);
-    $a->colpito($index);
-    var_dump($a->coordinate);
 
-}
-else {
-    echo(false);
-}
+
