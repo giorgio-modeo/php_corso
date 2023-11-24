@@ -18,6 +18,7 @@ class Route
 {
     public const LOGIN = '/login';
     public const LOGOUT = '/logout';
+    public const REGISTER = '/register';
     public const DASHBOARD = '/admin/users';
 
     public static function getRoutes(): array
@@ -27,6 +28,7 @@ class Route
             [ 'GET', '/hello[/{name}]', Controller\Hello::class ],
             [ ['GET', 'POST'], self::LOGIN, Controller\Login::class ],
             [ 'GET', self::LOGOUT, Controller\Logout::class ],
+            [ 'GET', self::REGISTER, Controller\Register::class ],
             [ 'GET', '/basic-auth', [BasicAuth::class, Controller\Secret::class]],
             // Admin section
             [ 'GET', '/admin/users[/{id}]', [Controller\AuthSession::class, Admin\Users\Read::class]],

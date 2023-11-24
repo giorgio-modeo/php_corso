@@ -1,7 +1,7 @@
-<?php $this->layout('layout', ['title' => 'Login']) ?>
+<?php $this->layout('layout', ['title' => 'Register']) ?>
 
 <main class="form-signin">
-  <form method="POST" action="<?= $this->e($login_url) ?>">
+  <form method="POST" action="<?= $this->e($register_url) ?>">
     <img class="mb-4" src="/img/logo.png" alt="" width="100%">
     <p>User: <i>admin</i>, Password: <i>supersecret</i></p>
     <div class="form-floating">
@@ -12,6 +12,11 @@
       <input type="password" class="form-control" id="password" name="password" placeholder="Password">
       <label for="password">Password</label>
     </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="reapet-password" name="reapet-password" placeholder="Reapet Password">
+      <label for="reapet-password">Reapet Password</label>
+    </div>
+
     <?php if (isset($error)): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <?= $this->e($error)?>
