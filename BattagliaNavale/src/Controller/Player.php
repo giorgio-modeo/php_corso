@@ -3,7 +3,7 @@
     namespace App\Controller;
     class Player{
         protected $nome;
-        protected $mosse = [];
+        protected $playerId;
 
         public function __construct($nome){
             $this->nome = $nome;
