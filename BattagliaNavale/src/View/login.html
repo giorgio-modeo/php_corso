@@ -6,14 +6,33 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="DBsave.php" method="post">
-        <input type="email" name="email" id="email">
+    <form>
+        <input type="text" name="nome" id="nome">
         <input type="password" name="pswd" id="pswd">
         <input type="button" value="invia">
-        <button>invia</button>
+
     </form>
     <script>
-        // invia i dati del form al
+document.querySelector("input[type='button']").addEventListener("click", function() {
+  let nome = document.querySelector("#nome").value;
+  let pswd = document.querySelector("#pswd").value;
+
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+      if (this.responseText === "login successful") {
+        window.location.href = "http://localhost/php_corso/BattagliaNavale/src/View/prova.php";
+      }
+    }
+  };
+
+  xhttp.open("POST", "http://localhost/php_corso/BattagliaNavale/src/Model/DBsave.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("nome=" + nome + "&pswd=" + pswd);
+});
+
+
     </script>
 </body>
 </html>
