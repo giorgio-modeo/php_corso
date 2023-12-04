@@ -10,7 +10,6 @@ class Ship{
     public function __construct($tipo, $lunghezza){
         $this->tipo = $tipo;
         $this->lunghezza = $lunghezza;
-
     }
 
     public function colpito($colpo){

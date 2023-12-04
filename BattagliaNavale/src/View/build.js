@@ -4,14 +4,12 @@ var premuto = 0;
 var navi_posizionate = Array();
 var coordinate = Array();
 
-function buildShipSelector() {
+function buildShipSelector(redirect){
     var form =document.createElement("form");
     document.body.appendChild(form);
     form.setAttribute("method", "post");
-    form.setAttribute("action", "prova.php");
+    form.setAttribute("action", redirect);
     var br = document.createElement("br");
-    // 8 navi: 1 di lunghezza 4, 2 di lunghezza 3 e 3 di lunghezza 2
-
     for(var i=0; i<6; i++){
         var nave = document.createElement("div");
         var input = nave.appendChild(document.createElement("input"));
@@ -28,7 +26,10 @@ function buildShipSelector() {
     document.body.appendChild(br);
 }
 
-function buildGrid() {
+function buildGrid(eventClick) {
+    div1 = document.createElement('div')
+    div1.setAttribute("id","campo")
+    document.body.appendChild(div1)
     for (let i = 65; i <= 74; i++) {
         let letter = String.fromCharCode(i);
         for(var j=0; j<10; j++){
@@ -39,11 +40,11 @@ function buildGrid() {
             cella.style.display = "inline-block";
             cella.style.cursor = "pointer";
             cella.setAttribute("id", letter+j.toString());
-            cella.setAttribute("content", letter+j.toString());
-            cella.setAttribute("onclick", "cliccato(this)");
-            document.body.appendChild(cella);
+            cella.setAttribute("value", letter+j.toString());
+            cella.setAttribute("onclick", eventClick);
+            div1.appendChild(cella);
         }
-        document.body.appendChild(document.createElement("br"));
+        div1.appendChild(document.createElement("br"));
     }
 }
 
@@ -58,7 +59,7 @@ function naveSelizionata(params,nave) {
 
 }
 
-function cliccato(cella){
+function verificaNave(cella){
     if(l_nave == null){
         alert("seleziona prima una nave");
         return;
@@ -83,9 +84,6 @@ function cliccato(cella){
         console.log(navi_posizionate);
     }
     if(navi_posizionate.length == 6){
-
-
-
         var input = document.createElement("input");
         input.setAttribute("type", "hidden");
         input.setAttribute("name", "navi");
@@ -94,4 +92,8 @@ function cliccato(cella){
         document.getElementsByTagName("form")[0].submit();
     }
 }
-
+function colpo(cella){
+    cella.style.backgroundColor = "red";
+    console.log(cella.id);
+    premuto++;
+}
