@@ -4,11 +4,13 @@ var premuto = 0;
 var navi_posizionate = Array();
 var coordinate = Array();
 
-function buildShipSelector(redirect){
+function buildShipSelector(){
     var form =document.createElement("form");
     document.body.appendChild(form);
+    form.setAttribute("id", "form");
     form.setAttribute("method", "post");
-    form.setAttribute("action", redirect);
+    
+    // form.setAttribute("action", "http://localhost:8080/../model/game.php");
     var br = document.createElement("br");
     for(var i=0; i<6; i++){
         var nave = document.createElement("div");
@@ -23,10 +25,22 @@ function buildShipSelector(redirect){
         nave.textContent = "lungezza nave: "+navi[i];
         document.getElementsByTagName("form")[0].appendChild(nave).appendChild(input);
     }
+    // creazione bottone per mettere le navi posizionate casualmente
+    var bottone = document.createElement("button");
+    bottone.setAttribute("type", "button");
+    bottone.setAttribute("onclick", "defaultNavi()");
+    bottone.textContent = "posizione default";
+    document.getElementsByTagName("form")[0].appendChild(bottone);
+
     document.body.appendChild(br);
+}
+function defaultNavi() {
+    navi_posizionate.push(["A0","A1","A2","A3"],["A5","A6","A7"],["A9","B9","C9"],["D8","D7"],["D5","D4"],["D2","D1"]);
+    verificaNave();
 }
 
 function buildGrid(eventClick) {
+    console.log(eventClick);
     div1 = document.createElement('div')
     div1.setAttribute("id","campo")
     document.body.appendChild(div1)
@@ -42,10 +56,14 @@ function buildGrid(eventClick) {
             cella.setAttribute("id", letter+j.toString());
             cella.setAttribute("value", letter+j.toString());
             cella.setAttribute("onclick", eventClick);
+            
             div1.appendChild(cella);
         }
         div1.appendChild(document.createElement("br"));
     }
+}
+function disable() {
+    document.getElementById("campo").style.pointerEvents = "none";
 }
 
 function naveSelizionata(params,nave) {
@@ -60,6 +78,13 @@ function naveSelizionata(params,nave) {
 }
 
 function verificaNave(cella){
+    console.log(navi_posizionate.length);
+    if(navi_posizionate.length == 6){
+        
+        sendNaviPosizionate();
+        navi_posizionate = Array();
+        return;
+    }
     if(l_nave == null){
         alert("seleziona prima una nave");
         return;
@@ -83,15 +108,25 @@ function verificaNave(cella){
         premuto = 0;
         console.log(navi_posizionate);
     }
-    if(navi_posizionate.length == 6){
-        var input = document.createElement("input");
-        input.setAttribute("type", "hidden");
-        input.setAttribute("name", "navi");
-        input.setAttribute("value", JSON.stringify(navi_posizionate));
-        document.getElementsByTagName("form")[0].appendChild(input) ;
-        document.getElementsByTagName("form")[0].submit();
-    }
+
 }
+function sendNaviPosizionate() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '../model/game.php');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    const data = `navi=${JSON.stringify(navi_posizionate)}`;
+    xhr.send(data);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('Navi posizionate sent successfully');
+        } else {
+            console.error('Error sending navi posizionate:', xhr.statusText);
+        }
+    };
+}
+
 function colpo(cella){
     cella.style.backgroundColor = "red";
     console.log(cella.id);
