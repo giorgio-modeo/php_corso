@@ -31,16 +31,25 @@ function buildShipSelector(){
     bottone.setAttribute("onclick", "defaultNavi()");
     bottone.textContent = "posizione default";
     document.getElementsByTagName("form")[0].appendChild(bottone);
-
+    
+    var bottoneS = document.createElement("button");
+    bottoneS.setAttribute("type", "button");
+    bottoneS.setAttribute("onclick", "NaviSbagliate()");
+    bottoneS.textContent = "posizione sbagliata";
+    document.getElementsByTagName("form")[0].appendChild(bottoneS);
     document.body.appendChild(br);
 }
 function defaultNavi() {
     navi_posizionate.push(["A0","A1","A2","A3"],["A5","A6","A7"],["A9","B9","C9"],["D8","D7"],["D5","D4"],["D2","D1"]);
     verificaNave();
 }
+function NaviSbagliate() {
+    navi_posizionate.push(["A0","A0","A0","A0"],["A5","A6","A5"],["A0","B9","C9"],["D6","D7"],["A5","D4"],["D2","D4"]);
+    verificaNave();
+}
 
 function buildGrid(eventClick) {
-    console.log(eventClick);
+
     div1 = document.createElement('div')
     div1.setAttribute("id","campo")
     document.body.appendChild(div1)
@@ -78,7 +87,6 @@ function naveSelizionata(params,nave) {
 }
 
 function verificaNave(cella){
-    console.log(navi_posizionate.length);
     if(navi_posizionate.length == 6){
         
         sendNaviPosizionate();
@@ -112,17 +120,17 @@ function verificaNave(cella){
 }
 function sendNaviPosizionate() {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '../model/game.php');
+    xhr.open('POST', 'http://localhost/php_corso/BattagliaNavale/src/model/game.php');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
     const data = `navi=${JSON.stringify(navi_posizionate)}`;
     xhr.send(data);
 
     xhr.onload = function() {
-        if (xhr.status === 200) {
-            console.log('Navi posizionate sent successfully');
-        } else {
-            console.error('Error sending navi posizionate:', xhr.statusText);
+        if (this.responseText === "all ships positioned") {
+            window.location.href = "http://localhost/php_corso/BattagliaNavale/src/View/prova.php";
+        }
+        else{
+            alert(this.responseText);
         }
     };
 }

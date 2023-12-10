@@ -19,5 +19,5 @@ if ($indice !== false) {
     header('Location: index.html');
 
 }
-
+ 
 ?>

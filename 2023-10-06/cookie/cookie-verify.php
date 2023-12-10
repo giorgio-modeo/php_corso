@@ -1,6 +1,5 @@
 <?php
-    setcookie("Privacy" , true,time() + 3
-    );
+    setcookie("Privacy" , true,time() + 3);
     header('Location: index.php');
 
 ?>

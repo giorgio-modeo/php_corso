@@ -1,27 +1,40 @@
 <?php
-    declare(strict_types=1);
-    header("Access-Control-Allow-Origin: *");
-    require_once __DIR__ . '/../Model/Ship.php';
-    echo('send successful');
 
-    var_dump($_POST);
-    echo('<br>');
-    var_dump($_POST['navi']);
-    echo('<br>');
-    echo('<br>');
+namespace App\Model;
+require_once './DBgame.php';
+require './Ship.php';
+header("Access-Control-Allow-Origin: *");
 
-    // print only value of ships  ["navi"]=> string(93) "[["A0","A1","A2","A3"],["A5","A6","A7"],["A9","B9","C9"],["D8","D7"],["D5","D4"],["D2","D1"]]" }
     $navi = json_decode($_POST['navi']);
-var_dump($navi);
-echo('<br>');
-echo('<br>');
-var_dump($navi[0]);
-echo('<br>');
-echo('<br>');
-var_dump($navi[0][0]);
-echo('<br>');
+    $naviCreate=[];
 
 
+    for ($i = 0; $i < count($navi); $i++) {
+        try {
+            if ($i == 0) {
+                $ship = new Ship("portaerei", 4);
+            } elseif ($i == 1 || $i == 2) {
+                $ship = new Ship("sottomarino", 3);
+            } else{
+                $ship = new Ship("cacciatorpediniere", 2);
+            }
+            if($ship -> impostaPosizione($navi[$i])){
+                $naviCreate[] = $ship;
+            }else{
 
+        }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        
+    }
+    if(count($naviCreate) == 6){
+        $dbGame = new DBgame();
+        $dbGame -> createGame();
+
+        echo"all ships positioned";
+    }
     
-    
+    else{
+        echo"le sezioni delle navi non possono sovrapporsi o essere lontahe tra loro";
+    }

@@ -9,12 +9,11 @@
     <?php 
         session_start();
         if(!isset($_SESSION['user'])){
-            header('Location: login.html');
+            header('Location: login.php');
         }
         if($_SESSION['user']){
             header('Location: prova.php');
         }
     ?>
-    <button><a href="login.html">login</a></button>
 </body>
-</html>
+</html>  

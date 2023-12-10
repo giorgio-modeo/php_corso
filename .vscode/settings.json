@@ -1,3 +1,6 @@
 {
-    "markdown-preview-enhanced.useGitHubStylePipedLink": true
+    "markdown-preview-enhanced.useGitHubStylePipedLink": true,
+    "github.copilot.advanced": {
+        
+    }
 }

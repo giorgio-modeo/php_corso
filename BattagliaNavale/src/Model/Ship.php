@@ -1,6 +1,6 @@
 <?php 
 declare(strict_types=1);
-namespace App\Controller;
+namespace App\Model;
 class Ship{
     public $tipo;
     public $lunghezza;
@@ -52,6 +52,11 @@ class Ship{
         $lunghezza = count($coordinate);
         $lettere = [];
         $numeri = [];
+            // Controllo per coordinate duplicate
+            if (count($coordinate) > count(array_unique($coordinate))) {
+                return false;
+            }
+
         foreach ($coordinate as $c) {
             $lettere[] = substr($c, 0, 1);
             $numeri[] = substr($c, 1, 1);
@@ -76,7 +81,6 @@ class Ship{
             return true;
         }
         return false;
-        
     }
 }
 
