@@ -30,6 +30,7 @@ header("Access-Control-Allow-Origin: *");
     }
     if(count($naviCreate) == 6){
         $dbGame = new DBgame();
+        
         $dbGame -> createGame();
 
         echo"all ships positioned";

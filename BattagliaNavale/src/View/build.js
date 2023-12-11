@@ -65,15 +65,15 @@ function buildGrid(eventClick) {
             cella.setAttribute("id", letter+j.toString());
             cella.setAttribute("value", letter+j.toString());
             cella.setAttribute("onclick", eventClick);
+ 
+        
             
             div1.appendChild(cella);
         }
         div1.appendChild(document.createElement("br"));
     }
 }
-function disable() {
-    document.getElementById("campo").style.pointerEvents = "none";
-}
+
 
 function naveSelizionata(params,nave) {
     if(l_nave != null){
@@ -124,19 +124,37 @@ function sendNaviPosizionate() {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     const data = `navi=${JSON.stringify(navi_posizionate)}`;
     xhr.send(data);
-
+  
     xhr.onload = function() {
-        if (this.responseText === "all ships positioned") {
-            window.location.href = "http://localhost/php_corso/BattagliaNavale/src/View/prova.php";
-        }
-        else{
-            alert(this.responseText);
-        }
+      if (this.responseText === "all ships positioned") {
+        $.ajax({
+          url: 'http://localhost/php_corso/BattagliaNavale/src/model/getIdGame.php',
+          type: 'POST',
+          success: function(response) {
+            console.log(response);
+            const url = 'http://localhost/php_corso/BattagliaNavale/src/View/prova.php?idGame=' + response + '&namePlayer='+document.cookie.split('; ').find(row => row.startsWith('nome')).split('=')[1];
+            // copy to clipboard
+            navigator.clipboard.writeText(url);
+            alert("condivi di il link con un amico per giocare insieme \nil link è stato copiato negli appunti"); 
+            window.location.href = url;
+          },
+          error: function() {
+            console.log('Si è verificato un errore');
+          }
+        });
+      }
+      else{
+        alert(this.responseText);
+      }
     };
-}
+  }
+  
 
 function colpo(cella){
+    if (cella.style.backgroundColor == "red") {
+        alert("hai già sparato qui");
+        return;
+    }
     cella.style.backgroundColor = "red";
-    console.log(cella.id);
     premuto++;
 }

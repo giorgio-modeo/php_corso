@@ -4,34 +4,44 @@
         <title>posizionamento navi</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <?php
+    if(!isset($_COOKIE['nome'])) {
+        header('Location: http://localhost/php_corso/BattagliaNavale/src/View/login.php');
+    }
+    ?>
     </head>
     <body>
         <script src="build.js"></script>
-        <script>;
+        <script>
+        var url = new URL(window.location.href);
+        var namePlayer =document.cookie.split('; ').find(row => row.startsWith('nome')).split('=')[1]
+        var nameHost =  url.searchParams.get("namePlayer");
+        console.log(nameHost);
+        document.cookie = "host="+nameHost +"; path=/";
+        
         buildGrid('colpo(this)');
-        $.ajax({
-            url: 'http://localhost/php_corso/BattagliaNavale/src/model/getIdGame.php',
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-                const url = 'http://localhost/php_corso/BattagliaNavale/src/View/prova.php?idGame=' + response + '&namePlayer='+<?php echo json_encode($_COOKIE['nome']); ?>;
-                console.log(url);
-                // copia questo url automaticamente nella clipboard quando si preme un bottone
-                var link = document.createElement("button");
-                link.setAttribute("type", "button");
-                link.textContent = "copia url";
-                link.addEventListener('click', function() {
-                    navigator.clipboard.writeText(url);
-                });
-                document.body.appendChild(link);
 
 
-            },
-            error: function() {
-                console.log('Si è verificato un errore');
-            }
+        if (nameHost == namePlayer) {
+            console.log("host");
+        } else {
+            document.getElementById("campo").style.pointerEvents = "none";
+            console.log("player");
+            $.ajax({
+          url: 'http://localhost/php_corso/BattagliaNavale/src/model/setPlayer2.php',
+          type: 'POST',
+          success: function(response) {
+            console.log(response);
+          },
+          error: function() {
+            console.log('Si è verificato un errore');
+          }
         });
+            
+        }
+
+
+
         </script>
 
 
